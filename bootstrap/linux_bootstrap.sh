@@ -19,16 +19,22 @@ ${SUDO_USER} apt-get update
 
 echo -e "\n${GREEN}  --->  installing/updating Python 3.7 #####${NC}\n"
 
-if [[ $(python3.7 --version | grep "Python 3.7") ]]; then
+if [[ $(python3.7 --version | grep "Python 3.7") =~ 3.7 ]]; then
     echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
 else
     ${SUDO_USER} add-apt-repository ppa:deadsnakes/ppa
     ${SUDO_USER} apt-get update
     ${SUDO_USER} apt-get -y install python3.7
+    echo -e "\n${GREEN}  --->  Python version #####${NC}\n"
+    python3.7 -V
+    echo -e "\n${GREEN}  --->  Python List All Modules #####${NC}\n"
+    python3.7 -c "print( help('modules'))"
+    echo -e "\n${GREEN}  --->  Python PIP version #####${NC}\n"
+    python3.7 -m pip --version
 fi
 
 echo -e "\n${GREEN}  --->  installing/upgrading pip #####${NC}\n"
-if [[ $(python3.7 -m pip --version | grep "pip") ]]; then
+if [[ $(python3.7 -m pip --version | grep "pip") =~ pip ]]; then
     echo -e "\n${GREEN} --->  Skipping Python 3.7 PIP install. Already installed. ${NC}\n"
     python3.7 -m pip install --upgrade pip
 fi
