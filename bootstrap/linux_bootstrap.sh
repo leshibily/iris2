@@ -19,19 +19,27 @@ ${SUDO_USER} apt-get update
 
 echo -e "\n${GREEN}  --->  installing/updating Python 3 #####${NC}\n"
 if command -v python3 &>/dev/null; then
-    echo -e "\n${GREEN} --->  Skipping Python 3 install. Already installed. ${NC}\n"
+    if [[ $(python3.7 --version | grep "Python 3.7") ]]; then
+        echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
+    else
+        ${SUDO_USER} add-apt-repository ppa:deadsnakes/ppa
+        ${SUDO_USER} apt-get update
+        ${SUDO_USER} apt-get -y install python3.7
+    fi
 else
     ${SUDO_USER} apt-get -y install python3
 fi
 
 echo -e "\n${GREEN}  --->  installing/upgrading pip #####${NC}\n"
-if command -v pip &>/dev/null; then
-    pip install --upgrade pip
-else
-    ${SUDO_USER} apt-get -y install python-pip
+if [[ $(python3.7 -m pip --version | grep "pip") ]]; then
+    echo -e "\n${GREEN} --->  Skipping Python 3.7 PIP install. Already installed. ${NC}\n"
+    python3.7 -m pip install --upgrade pip
 fi
 
 # Installing library dependencies
+echo -e "\n${GREEN}  --->  installing/upgrading git #####${NC}\n"
+${SUDO_USER} apt-get -y install git
+
 echo -e "\n${GREEN}  --->  installing/upgrading scrot #####${NC}\n"
 ${SUDO_USER} apt-get -y install scrot
 
@@ -89,9 +97,9 @@ ${SUDO_USER} apt-get -y install python3-tk
 
 echo -e "\n${GREEN}  --->  installing/upgrading pipenv #####${NC}\n"
 if command -v pipenv &>/dev/null; then
-    pip install --upgrade pipenv
+    python3.7 -m pip install --upgrade pipenv
 else
-    pip install pipenv
+    python3.7 -m pip install pipenv
 fi
 
 
