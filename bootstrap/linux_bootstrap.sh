@@ -17,17 +17,14 @@ echo -e "${GREEN}  --->  apt-get update #####${NC} \n"
 ${SUDO_USER} apt-get update
 
 
-echo -e "\n${GREEN}  --->  installing/updating Python 3 #####${NC}\n"
-if command -v python3 &>/dev/null; then
-    if [[ $(python3.7 --version | grep "Python 3.7") ]]; then
-        echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
-    else
-        ${SUDO_USER} add-apt-repository ppa:deadsnakes/ppa
-        ${SUDO_USER} apt-get update
-        ${SUDO_USER} apt-get -y install python3.7
-    fi
+echo -e "\n${GREEN}  --->  installing/updating Python 3.7 #####${NC}\n"
+
+if [[ $(python3.7 --version | grep "Python 3.7") ]]; then
+    echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
 else
-    ${SUDO_USER} apt-get -y install python3
+    ${SUDO_USER} add-apt-repository ppa:deadsnakes/ppa
+    ${SUDO_USER} apt-get update
+    ${SUDO_USER} apt-get -y install python3.7
 fi
 
 echo -e "\n${GREEN}  --->  installing/upgrading pip #####${NC}\n"
@@ -96,7 +93,7 @@ ${SUDO_USER} apt-get -y install python3-tk
 
 
 echo -e "\n${GREEN}  --->  installing/upgrading pipenv #####${NC}\n"
-if command -v pipenv &>/dev/null; then
+if [[ $(python3.7 -m pipenv --version | grep "pipenv") ]];then
     python3.7 -m pip install --upgrade pipenv
 else
     python3.7 -m pip install pipenv
