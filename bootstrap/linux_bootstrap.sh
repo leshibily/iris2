@@ -7,78 +7,84 @@ NC='\033[0m' # No Color
 
 echo -e "\n${RED}##### Starting Linux OS bootstrap #####${NC} \n"
 
-echo -e "${GREEN}  --->  sudo apt-get update #####${NC} \n"
-sudo apt-get update
+if [[ $(whoami | grep "root") ]]; then
+    SUDO_USER=""
+else
+    SUDO_USER="sudo"
+fi
+
+echo -e "${GREEN}  --->  apt-get update #####${NC} \n"
+${SUDO_USER} apt-get update
 
 
 echo -e "\n${GREEN}  --->  installing/updating Python 3 #####${NC}\n"
 if command -v python3 &>/dev/null; then
     echo -e "\n${GREEN} --->  Skipping Python 3 install. Already installed. ${NC}\n"
 else
-    sudo apt-get -y install python3
+    ${SUDO_USER} apt-get -y install python3
 fi
 
 echo -e "\n${GREEN}  --->  installing/upgrading pip #####${NC}\n"
 if command -v pip &>/dev/null; then
     pip install --upgrade pip
 else
-    sudo apt-get -y install python-pip
+    ${SUDO_USER} apt-get -y install python-pip
 fi
 
 # Installing library dependencies
 echo -e "\n${GREEN}  --->  installing/upgrading scrot #####${NC}\n"
-sudo apt-get -y install scrot
+${SUDO_USER} apt-get -y install scrot
 
 echo -e "\n${GREEN}  --->  installing/upgrading xsel #####${NC}\n"
-sudo apt-get -y install xsel
+${SUDO_USER} apt-get -y install xsel
 
 echo -e "\n${GREEN}  --->  installing/upgrading p7zip-full #####${NC}\n"
-sudo apt-get -y install p7zip-full
+${SUDO_USER} apt-get -y install p7zip-full
 
 echo -e "\n${GREEN}  --->  installing/upgrading libopencv-dev #####${NC}\n"
-sudo apt-get -y install libopencv-dev
+${SUDO_USER} apt-get -y install libopencv-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading autoconf automake libtool #####${NC}\n"
-sudo apt-get -y install autoconf automake libtool
+${SUDO_USER} apt-get -y install autoconf automake libtool
 
 echo -e "\n${GREEN}  --->  installing/upgrading autoconf-archive #####${NC}\n"
-sudo apt-get -y install autoconf-archive
+${SUDO_USER} apt-get -y install autoconf-archive
 
 echo -e "\n${GREEN}  --->  installing/upgrading pkg-config #####${NC}\n"
-sudo apt-get -y install pkg-config
+${SUDO_USER} apt-get -y install pkg-config
 
 echo -e "\n${GREEN}  --->  installing/upgrading libpng-dev #####${NC}\n"
-sudo apt-get -y install libpng-dev
+${SUDO_USER} apt-get -y install libpng-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading libjpeg8-dev #####${NC}\n"
-sudo apt-get -y install libjpeg8-dev
+${SUDO_USER} apt-get -y install libjpeg8-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading libtiff5-dev #####${NC}\n"
-sudo apt-get -y install libtiff5-dev
+${SUDO_USER} apt-get -y install libtiff5-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading zlib1g-dev #####${NC}\n"
-sudo apt-get -y install zlib1g-dev
+${SUDO_USER} apt-get -y install zlib1g-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading libicu-dev #####${NC}\n"
-sudo apt-get -y install libicu-dev
+${SUDO_USER} apt-get -y install libicu-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading libpango1.0-dev #####${NC}\n"
-sudo apt-get -y install libpango1.0-dev
+${SUDO_USER} apt-get -y install libpango1.0-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading  libcairo2-dev #####${NC}\n"
-sudo apt-get -y install libcairo2-dev
+${SUDO_USER} apt-get -y install libcairo2-dev
 
 echo -e "\n${GREEN}  --->  installing/upgrading firefox #####${NC}\n"
-sudo apt-get -y install firefox
+${SUDO_USER} apt-get -y install firefox
 
 echo -e "\n${GREEN}  --->  installing/upgrading wmctrl #####${NC}\n"
-sudo apt-get -y install wmctrl
+${SUDO_USER} apt-get -y install wmctrl
 
 echo -e "\n${GREEN}  --->  installing/upgrading xdotool #####${NC}\n"
-sudo apt-get -y install xdotool
+${SUDO_USER} apt-get -y install xdotool
 
-echo -e "\n${GREEN}  --->  installing/upgrading python-tk #####${NC}\n"
-sudo apt-get -y install python-tk
+echo -e "\n${GREEN}  --->  installing/upgrading python3-tk #####${NC}\n"
+${SUDO_USER} apt-get -y install python3-tk
 
 
 echo -e "\n${GREEN}  --->  installing/upgrading pipenv #####${NC}\n"
@@ -114,9 +120,9 @@ else
     fi
 
     if [[ $(pwd | grep "leptonica-1.76.0") ]]; then
-        sudo ./configure &&\
-        sudo make &&\
-        sudo make install
+        ${SUDO_USER} ./configure &&\
+        ${SUDO_USER} make &&\
+        ${SUDO_USER} make install
     fi
 fi
 
@@ -146,12 +152,12 @@ else
     fi
 
     if [[ $(pwd | grep "tesseract-4.0.0") ]]; then
-        sudo ./autogen.sh &&\
+        ${SUDO_USER} ./autogen.sh &&\
         ./configure --enable-debug &&\
         LDFLAGS="-L/usr/local/lib" CFLAGS="-I/usr/local/include" make &&\
-        sudo make install &&\
-        sudo make install -langs &&\
-        sudo ldconfig
+        ${SUDO_USER} make install &&\
+        ${SUDO_USER} make install -langs &&\
+        ${SUDO_USER} ldconfig
     fi
 fi
 
@@ -183,10 +189,10 @@ if  [ ! -f /usr/local/share/tessdata/afr.traineddata ]; then
     fi
 
     if [[ $(pwd | grep "tessdata-4.0.0") ]]; then
-        if [ ! -d /usr/local/share/tessdata/ ]; then
-            sudo mkdir /usr/local/share/tessdata/
+        if [[ ! -d /usr/local/share/tessdata/ ]]; then
+            ${SUDO_USER} mkdir /usr/local/share/tessdata/
         fi
-        sudo mv * /usr/local/share/tessdata/
+        ${SUDO_USER} mv * /usr/local/share/tessdata/
     fi
 
 else
