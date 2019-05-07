@@ -6,7 +6,6 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 
-
 echo -e "\n${RED}##### Starting Linux OS bootstrap #####${NC} \n"
 
 if [[ $(whoami | grep "root") =~ root ]]; then
@@ -16,7 +15,7 @@ else
 fi
 
 install_python37 () {
-    ${SUDO_USER} add-apt-repository ppa:deadsnakes/ppa
+    ${SUDO_USER} add-apt-repository -y ppa:deadsnakes/ppa
     ${SUDO_USER} apt-get update
     ${SUDO_USER} apt-get -y install python3.7
     echo -e "\n${GREEN}  --->  Python version #####${NC}\n"
@@ -37,14 +36,19 @@ ${SUDO_USER} apt-get -y install python3.7-dev
 echo -e "\n${GREEN}  --->  installing/upgrading python-psutil #####${NC}\n"
 ${SUDO_USER} apt-get -y install python-psutil
 
+
 echo -e "\n${GREEN}  --->  installing/updating Python 3.7 #####${NC}\n"
 if command -v python3 &>/dev/null; then
     if [[ $(python3 --version | grep "Python 3.7") =~ 3.7 ]]; then
         echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
+    elif command -v python3.7 &>/dev/null; then
+        echo -e "\n${GREEN} ---> Verified for specific python3.7. Skipped install. Already installed. ${NC}\n"--version | grep "Python 3.7"
     else
+        echo -e "\n${GREEN}  --->  Installing Python 3.7 #####${NC}\n"
         install_python37
     fi
 else
+    echo -e "\n${GREEN}  --->  Installing Python 3.7 #####${NC}\n"
     install_python37
 fi
 
@@ -109,8 +113,8 @@ ${SUDO_USER} apt-get -y install wmctrl
 echo -e "\n${GREEN}  --->  installing/upgrading xdotool #####${NC}\n"
 ${SUDO_USER} apt-get -y install xdotool
 
-echo -e "\n${GREEN}  --->  installing/upgrading python3-tk #####${NC}\n"
-${SUDO_USER} apt-get -y install python3-tk
+echo -e "\n${GREEN}  --->  installing/upgrading python3.7-tk #####${NC}\n"
+${SUDO_USER} apt-get -y install python3.7-tk
 
 
 echo -e "\n${GREEN}  --->  installing/upgrading pipenv #####${NC}\n"
