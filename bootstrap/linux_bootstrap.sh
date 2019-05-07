@@ -5,23 +5,17 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+
+
 echo -e "\n${RED}##### Starting Linux OS bootstrap #####${NC} \n"
 
-if [[ $(whoami | grep "root") ]]; then
+if [[ $(whoami | grep "root") =~ root ]]; then
     SUDO_USER=""
 else
     SUDO_USER="sudo"
 fi
 
-echo -e "${GREEN}  --->  apt-get update #####${NC} \n"
-${SUDO_USER} apt-get update
-
-
-echo -e "\n${GREEN}  --->  installing/updating Python 3.7 #####${NC}\n"
-
-if [[ $(python3.7 --version | grep "Python 3.7") =~ 3.7 ]]; then
-    echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
-else
+install_python37 () {
     ${SUDO_USER} add-apt-repository ppa:deadsnakes/ppa
     ${SUDO_USER} apt-get update
     ${SUDO_USER} apt-get -y install python3.7
@@ -31,6 +25,27 @@ else
     python3.7 -c "print( help('modules'))"
     echo -e "\n${GREEN}  --->  Python PIP version #####${NC}\n"
     python3.7 -m pip --version
+}
+
+echo -e "${GREEN}  --->  apt-get update #####${NC} \n"
+${SUDO_USER} apt-get update
+
+# Installing python library dependencies
+echo -e "\n${GREEN}  --->  installing/upgrading python3.7-dev #####${NC}\n"
+${SUDO_USER} apt-get -y install python3.7-dev
+
+echo -e "\n${GREEN}  --->  installing/upgrading python-psutil #####${NC}\n"
+${SUDO_USER} apt-get -y install python-psutil
+
+echo -e "\n${GREEN}  --->  installing/updating Python 3.7 #####${NC}\n"
+if command -v python3 &>/dev/null; then
+    if [[ $(python3 --version | grep "Python 3.7") =~ 3.7 ]]; then
+        echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
+    else
+        install_python37
+    fi
+else
+    install_python37
 fi
 
 echo -e "\n${GREEN}  --->  installing/upgrading pip #####${NC}\n"
@@ -99,7 +114,7 @@ ${SUDO_USER} apt-get -y install python3-tk
 
 
 echo -e "\n${GREEN}  --->  installing/upgrading pipenv #####${NC}\n"
-if [[ $(python3.7 -m pipenv --version | grep "pipenv") ]];then
+if [[ $(python3.7 -m pipenv --version | grep "pipenv") =~ pipenv ]];then
     python3.7 -m pip install --upgrade pipenv
 else
     python3.7 -m pip install pipenv
