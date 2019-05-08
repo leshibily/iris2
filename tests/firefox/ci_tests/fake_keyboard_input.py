@@ -11,7 +11,7 @@ class Test(FirefoxTest):
         locale=[Locales.ENGLISH],
         platform=OSPlatform.LINUX
     )
-    def run(self, firefox):
+    def test_run(self, firefox):
         history_empty_pattern = Pattern('history_empty.png')
 
         new_tab()

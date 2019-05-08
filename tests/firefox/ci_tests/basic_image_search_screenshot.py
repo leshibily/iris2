@@ -15,7 +15,7 @@ class Test(FirefoxTest):
                     'frame buffer environment.',
         locale=[Locales.ENGLISH]
     )
-    def run(self, firefox):
+    def test_run(self, firefox):
 
         try:
             image = pyautogui.screenshot()

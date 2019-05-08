@@ -13,6 +13,6 @@ class Test(BaseTest):
     @pytest.mark.details(meta="Notepad Test experiment",
                                        description="This test is just an experiment for Notepad",
                                        blocked_by="232111")
-    def run(self):
+    def test_run(self):
         find(Pattern('test.png'), Rectangle(0, 0, 100, 100))
         assert True == True, 'Assert message failed'
