@@ -36,3 +36,5 @@ xlib = {platform_system = "== 'Linux'",version = "==0.21"}
 pylint = "*"
 pep8 = "*"
 
+[requires]
+python_version = "3.7"
