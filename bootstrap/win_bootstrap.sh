@@ -30,6 +30,15 @@ else
     echo -e "${GREEN}  --->  Skipping Scoop update. Already latest version. ${NC}\n"
 fi
 
+echo -e "\n${GREEN}--->  Installing/updating 7zip #####${NC}\n"
+if [[ $(scoop list | grep "7zip") =~ 7zip ]]; then
+    echo -e "${GREEN}  --->  Skipping 7zip install. Already installed. ${NC}\n"
+else
+    powershell -Command "scoop install 7zip"
+fi
+
+powershell -Command "scoop bucket add extras"
+
 echo -e "\n${GREEN}  --->  Installing Firefox #####${NC}\n"
 if [[ $(scoop list | grep "firefox") =~ firefox ]]; then
     echo -e "${GREEN}  --->  Skipping firefox install. Already installed. Update Firefox ${NC}\n"
@@ -56,6 +65,7 @@ if [[ $(scoop list | grep "which") =~ which ]]; then
 else
     powershell -Command "scoop install which"
 fi
+
 echo -e "\n${GREEN}  --->  Installing sudo #####${NC}\n"
 if [[ $(scoop list | grep "sudo") =~ sudo ]]; then
     echo -e "${GREEN}  --->  Skipping sudo install. Already installed. Update sudo${NC}\n"
@@ -63,15 +73,6 @@ if [[ $(scoop list | grep "sudo") =~ sudo ]]; then
 else
     powershell -Command "scoop install sudo"
 fi
-
-
-echo -e "\n${GREEN}--->  Installing/updating 7zip #####${NC}\n"
-if [[ $(scoop list | grep "7zip") =~ 7zip ]]; then
-    echo -e "${GREEN}  --->  Skipping 7zip install. Already installed. ${NC}\n"
-else
-    powershell -Command "scoop install 7zip"
-fi
-
 
 echo -e "\n${GREEN} --->  Installing Tesseract 4 ${NC} \n"
 if command -v tesseract &>/dev/null; then
@@ -89,16 +90,22 @@ else
     powershell -Command "scoop install tesseract"
 fi
 
-
-
-echo -e "\n${GREEN}  --->  Installing Python 3.7 #####${NC}\n"
+echo -e "\n${GREEN}  --->  installing/updating Python 3.7 #####${NC}\n"
 if command -v python3 &>/dev/null; then
-    echo -e "${GREEN}  --->  Skipping Python 3.7 install. Already installed. ${NC}\n"
+    if [[ $(python3 --version | grep "Python 3.7") =~ 3.7 ]]; then
+         echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"
+    elif command -v python3.7 &>/dev/null; then
+        echo -e "\n${GREEN} ---> Verified for specific python3.7. Skipped install. Already installed. ${NC}\n"
+    else
+        echo -e "${GREEN}  --->  Update to Python 3.7 . ${NC}\n"
+        powershell -Command "scoop update python" | grep 'bucket already exists.' &> /dev/null
+    fi
 else
+    echo -e "\n${GREEN}  --->  Installing Python 3.7 #####${NC}\n"
     powershell -Command "scoop install python" | grep 'bucket already exists.' &> /dev/null
     if [ $? != 0 ]; then
        echo -e "\n${RED} --->  Python 3.7 now installed. You need to restart the terminal one more time and run the bootstrap.sh again to complete the install.${NC}\n"
-       echo -e "\n${RED} --->  Last restart needed in order to use 'python' and install python dependent packages ${NC}\n"
+       echo -e "\n${RED} --->  Last restart needed in order to use 'python3' and install python3 dependent packages ${NC}\n"
        sleep 20
        exit
     fi
@@ -106,8 +113,8 @@ fi
 
 echo -e "\n${GREEN}  --->  installing/upgrading pipenv ${NC}\n"
 if command -v pipenv &>/dev/null; then
-    powershell -Command "pip3 install --upgrade pip"
-    powershell -Command "pip3 install --upgrade pipenv"
+    powershell -Command "pip3.7 install --upgrade pip"
+    powershell -Command "pip3.7 install --upgrade pipenv"
 else
-    powershell -Command "pip3 install pipenv"
+    powershell -Command "pip3.7 install pipenv"
 fi

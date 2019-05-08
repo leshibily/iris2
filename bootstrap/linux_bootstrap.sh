@@ -24,6 +24,7 @@ install_python37 () {
     python3.7 -c "print( help('modules'))"
     echo -e "\n${GREEN}  --->  Python PIP version #####${NC}\n"
     python3.7 -m pip --version
+    pip3.7 --version
 }
 
 echo -e "${GREEN}  --->  apt-get update #####${NC} \n"
@@ -42,7 +43,7 @@ if command -v python3 &>/dev/null; then
     if [[ $(python3 --version | grep "Python 3.7") =~ 3.7 ]]; then
         echo -e "\n${GREEN} --->  Skipping Python 3.7 install. Already installed. ${NC}\n"--version | grep "Python 3.7"
     elif command -v python3.7 &>/dev/null; then
-        echo -e "\n${GREEN} ---> Verified for specific python3.7. Skipped install. Already installed. ${NC}\n"--version | grep "Python 3.7"
+        echo -e "\n${GREEN} ---> Verified for specific python3.7. Skipped install. Already installed. ${NC}\n"
     else
         echo -e "\n${GREEN}  --->  Installing Python 3.7 #####${NC}\n"
         install_python37
@@ -53,9 +54,9 @@ else
 fi
 
 echo -e "\n${GREEN}  --->  installing/upgrading pip #####${NC}\n"
-if [[ $(python3.7 -m pip --version | grep "pip") =~ pip ]]; then
+if [[ $(pip3.7 --version | grep "pip") =~ pip ]]; then
     echo -e "\n${GREEN} --->  Skipping Python 3.7 PIP install. Already installed. ${NC}\n"
-    python3.7 -m pip install --upgrade pip
+    pip3.7 -m pip install --upgrade pip
 fi
 
 # Installing library dependencies
@@ -119,9 +120,9 @@ ${SUDO_USER} apt-get -y install python3.7-tk
 
 echo -e "\n${GREEN}  --->  installing/upgrading pipenv #####${NC}\n"
 if [[ $(python3.7 -m pipenv --version | grep "pipenv") =~ pipenv ]];then
-    python3.7 -m pip install --upgrade pipenv
+    pip3.7 install --upgrade pipenv
 else
-    python3.7 -m pip install pipenv
+    pip3.7 install pipenv
 fi
 
 
