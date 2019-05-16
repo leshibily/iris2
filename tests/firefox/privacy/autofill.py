@@ -13,7 +13,7 @@ class Test(FirefoxTest):
     @pytest.mark.details(
         description='Autofill is not automatically performed in Private Browsing.',
         test_case_id='101673',
-        test_suite_id='1956',
+        test_suite_id='1826',
         locale=['en-US'],
         enabled=False
     )
