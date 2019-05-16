@@ -60,7 +60,7 @@ class Test(FirefoxTest):
         new_tab()
         navigate(LocalWeb.FIREFOX_TEST_SITE)
 
-        firefox_test_site_opened = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_FIREFOX_TIMEOUT)
+        firefox_test_site_opened = exists(LocalWeb.FIREFOX_LOGO, Settings.DEFAULT_FIREFOX_TIMEOUT)
         assert firefox_test_site_opened, 'Firefox test site opened.'
 
         close_tab()
@@ -68,7 +68,7 @@ class Test(FirefoxTest):
         new_tab()
         navigate(LocalWeb.FOCUS_TEST_SITE)
 
-        focus_test_site_opened = exists(LocalWeb.FOCUS_LOGO, DEFAULT_FIREFOX_TIMEOUT)
+        focus_test_site_opened = exists(LocalWeb.FOCUS_LOGO, Settings.DEFAULT_FIREFOX_TIMEOUT)
         assert focus_test_site_opened, 'Focus test site opened.'
 
         close_tab()
@@ -76,7 +76,7 @@ class Test(FirefoxTest):
         new_tab()
         navigate(LocalWeb.POCKET_TEST_SITE)
 
-        pocket_site_opened = exists(LocalWeb.POCKET_LOGO, DEFAULT_FIREFOX_TIMEOUT)
+        pocket_site_opened = exists(LocalWeb.POCKET_LOGO, Settings.DEFAULT_FIREFOX_TIMEOUT)
         assert pocket_site_opened, 'Pocket site opened'
 
         close_tab()
@@ -102,17 +102,17 @@ class Test(FirefoxTest):
         new_tab()
         navigate('https://www.stmarys-ca.edu/sites/default/files/attachments/files/Faust.pdf')
 
-        pdf_bar_located = exists(download_pdf_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        pdf_bar_located = exists(download_pdf_pattern, Settings.DEFAULT_FIREFOX_TIMEOUT)
         assert pdf_bar_located, 'PDF loaded'
 
         click(download_pdf_pattern)
 
-        save_file_dialog_exists = exists(DownloadDialog.SAVE_FILE_RADIOBUTTON, DEFAULT_FIREFOX_TIMEOUT*3)
+        save_file_dialog_exists = exists(DownloadDialog.SAVE_FILE_RADIOBUTTON, Settings.DEFAULT_FIREFOX_TIMEOUT * 3)
         assert save_file_dialog_exists, 'Save file dialog opened'
 
         click(DownloadDialog.SAVE_FILE_RADIOBUTTON)
 
-        ok_button_exists = exists(DownloadDialog.OK_BUTTON, DEFAULT_FIREFOX_TIMEOUT)
+        ok_button_exists = exists(DownloadDialog.OK_BUTTON, Settings.DEFAULT_FIREFOX_TIMEOUT)
         assert ok_button_exists, 'Button OK exists'
 
         click(DownloadDialog.OK_BUTTON)
