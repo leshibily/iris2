@@ -12,7 +12,8 @@ class Test(FirefoxTest):
         description='Firefox can be set to no longer remember search and form history.',
         locale=['en-US'],
         test_case_id='105209',
-        test_suite_id='1826'
+        test_suite_id='1826',
+        enabled=False
     )
     def run(self, firefox):
         remember_history_pattern = Pattern('remember_history.png')
@@ -106,5 +107,6 @@ class Test(FirefoxTest):
         click(name_form_pattern)
 
         type('r')
+
         no_autocomplete = not exists(autocomplete_pattern)
         assert no_autocomplete, 'The form history is not saved.'
