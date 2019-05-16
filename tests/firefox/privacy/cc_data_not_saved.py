@@ -15,8 +15,8 @@ class Test(FirefoxTest):
             locale=['en-US'],
             test_case_id='101668',
             test_suite_id='1826',
-            set_profile_pref = {'extensions.formautofill.available': 'on',
-                               'extensions.formautofill.creditCards.available': True}
+            set_profile_pref={'extensions.formautofill.available': 'on',
+                              'extensions.formautofill.creditCards.available': True}
         )
         def run(self, firefox):
             private_browsing_image_pattern = PrivateWindow.private_window_pattern
