@@ -12,7 +12,7 @@ class Test(FirefoxTest):
         description='Firefox can be set to delete cookies when closed.',
         locale=['en-US'],
         test_case_id='106157',
-        test_suite_id='1956'
+        test_suite_id='1826'
     )
     def run(self, firefox):
         preferences_privacy_page_pattern = AboutPreferences.PRIVACY_AND_SECURITY_BUTTON_SELECTED
