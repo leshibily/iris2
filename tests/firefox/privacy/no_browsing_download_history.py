@@ -13,17 +13,17 @@ class Test(FirefoxTest):
         locale=['en-US'],
         test_case_id='105208',
         test_suite_id='1826',
-        set_profile_pref={'browser.download.dir': IrisCore.get_downloads_dir()},
-                         {'browser.download.folderList': 2, },
-                         {'browser.download.useDownloadDir': True},
-        enabled=False
+        set_profile_pref={'browser.download.dir': IrisCore.get_downloads_dir(),
+                          'browser.download.folderList': 2,
+                          'browser.download.useDownloadDir': True},
+        blocked_by='set_profile_pref, get_downloads_dir(), change_preference(), downloads_cleanup() don\'t '
+                   'work properly'
     )
-    def setup(self):
-        downloads_cleanup()
-
-    def teardown(self):
-        downloads_cleanup()
-
+    # def setup(self):
+    #     downloads_cleanup()
+    #
+    # def teardown(self):
+    #     downloads_cleanup()
     def run(self, firefox):
         remember_history_pattern = Pattern('remember_history.png')
         remember_browsing_download_pattern = Pattern('remember_browsing_history.png')

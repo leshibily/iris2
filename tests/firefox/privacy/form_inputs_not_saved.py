@@ -13,7 +13,8 @@ class Test(FirefoxTest):
         locale=['en-US'],
         test_case_id='101669',
         test_suite_id='1826',
-        set_profile_pref={'extensions.formautofill.available': 'on'}
+        set_profile_pref={'extensions.formautofill.available': 'on'},
+        blocked_by='set_profile_pref, change_preference() don\'t work properly'
     )
     def run(self, firefox):
         private_browsing_image_pattern = PrivateWindow.private_window_pattern

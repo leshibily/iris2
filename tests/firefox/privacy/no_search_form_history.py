@@ -13,7 +13,7 @@ class Test(FirefoxTest):
         locale=['en-US'],
         test_case_id='105209',
         test_suite_id='1826',
-        enabled=False
+        blocked_by='get_asset_path() don\'t work properly'
     )
     def run(self, firefox):
         remember_history_pattern = Pattern('remember_history.png')

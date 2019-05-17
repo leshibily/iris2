@@ -55,7 +55,7 @@ class Test(FirefoxTest):
         new_private_window()
 
         new_private_window_exists = exists(private_browsing_image_pattern)
-        assert(self, new_private_window_exists, 'The private browsing tab is displayed.')
+        assert new_private_window_exists, 'The private browsing tab is displayed.'
 
         navigate('twitter.com')
 
