@@ -31,17 +31,18 @@ class Test(FirefoxTest):
         new_private_window()
 
         # private_window_opened = exists(new_private_browsing_tab_pattern, Settings.SITE_LOAD_TIMEOUT)
-        private_window_opened = exists(new_private_browsing_tab_pattern, Settings.DEFAULT_FIREFOX_TIMEOUT*3)
+        private_window_opened = exists(new_private_browsing_tab_pattern, Settings.DEFAULT_SITE_LOAD_TIMEOUT)
         assert private_window_opened is True, 'A new private window is successfully opened'
 
         navigate('http://www.cnn.com/2016/10/10/us/weather-matthew/index.html')
 
         # cnn_weather_page_loaded = exists(cnn_weather_page_tab_pattern, Settings.HEAVY_SITE_LOAD_TIMEOUT, tabs_region)
-        cnn_weather_page_loaded = exists(cnn_weather_page_tab_pattern, Settings.DEFAULT_FIREFOX_TIMEOUT*9, tabs_region)
+        cnn_weather_page_loaded = exists(cnn_weather_page_tab_pattern, Settings.DEFAULT_HEAVY_SITE_LOAD_TIMEOUT,
+                                         tabs_region)
         assert cnn_weather_page_loaded is True, 'The specified website is successfully loaded.'
 
         # video_playing = exists(speaker_icon_pattern, Settings.SITE_LOAD_TIMEOUT)
-        video_playing = exists(speaker_icon_pattern, Settings.DEFAULT_FIREFOX_TIMEOUT*3)
+        video_playing = exists(speaker_icon_pattern, Settings.DEFAULT_SITE_LOAD_TIMEOUT)
         assert video_playing is True, 'The video is playing and the speaker icon is displayed'
 
         first_video_centred = scroll_until_pattern_found(north_text_mark_pattern, 100, 20)
@@ -52,8 +53,8 @@ class Test(FirefoxTest):
         try:
             # speaker_icon_vanished = wait_vanish(speaker_icon_pattern, Settings.SITE_LOAD_TIMEOUT, tabs_region)
             # play_icon_appeared = exists(play_icon_pattern, Settings.SITE_LOAD_TIMEOUT
-            speaker_icon_vanished = wait_vanish(speaker_icon_pattern, Settings.DEFAULT_FIREFOX_TIMEOUT*3, tabs_region)
-            play_icon_appeared = exists(play_icon_pattern, Settings.DEFAULT_FIREFOX_TIMEOUT*3)
+            speaker_icon_vanished = wait_vanish(speaker_icon_pattern, Settings.DEFAULT_SITE_LOAD_TIMEOUT, tabs_region)
+            play_icon_appeared = exists(play_icon_pattern, Settings.DEFAULT_SITE_LOAD_TIMEOUT)
             assert (speaker_icon_vanished and play_icon_appeared) is True, 'Video is stopped'
         except FindError:
             raise FindError('Video is not stopped')
@@ -64,7 +65,7 @@ class Test(FirefoxTest):
         click(related_video_pattern)
 
         # related_video_playing = exists(speaker_icon_pattern, Settings.SITE_LOAD_TIMEOUT, tabs_region)
-        related_video_playing = exists(speaker_icon_pattern, Settings.DEFAULT_FIREFOX_TIMEOUT*3, tabs_region)
+        related_video_playing = exists(speaker_icon_pattern, Settings.DEFAULT_SITE_LOAD_TIMEOUT, tabs_region)
         assert related_video_playing is True, 'The video is playing and there is no browser crashes'
 
         close_window()
