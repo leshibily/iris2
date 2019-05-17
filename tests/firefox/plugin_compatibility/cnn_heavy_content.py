@@ -13,7 +13,7 @@ class Test(FirefoxTest):
         locale=['en-US'],
         test_case_id='125534',
         test_suite_id='2074',
-        # enabled=False
+        enabled=False
     )
     def run(self, firefox):
         new_private_browsing_tab_pattern = PrivateWindow.private_window_pattern
