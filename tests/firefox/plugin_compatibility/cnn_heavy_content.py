@@ -13,7 +13,7 @@ class Test(FirefoxTest):
         locale=['en-US'],
         test_case_id='125534',
         test_suite_id='2074',
-        enabled=False
+        # enabled=False
     )
     def run(self, firefox):
         new_private_browsing_tab_pattern = PrivateWindow.private_window_pattern
@@ -25,6 +25,13 @@ class Test(FirefoxTest):
 
         home_width, home_height = NavBar.HOME_BUTTON.get_size()
         tabs_region = Rectangle(0, 0, Screen.SCREEN_WIDTH/2, home_height * 4)
+
+        if OSHelper.is_windows():
+            mouse_wheel_steps = 500
+        elif OSHelper.is_linux():
+            mouse_wheel_steps = 100
+        else:
+            mouse_wheel_steps = 100
 
         change_preference('media.autoplay.default', '0')  # It seems that is not work as expected
 
@@ -45,7 +52,7 @@ class Test(FirefoxTest):
         video_playing = exists(speaker_icon_pattern, Settings.DEFAULT_SITE_LOAD_TIMEOUT)
         assert video_playing is True, 'The video is playing and the speaker icon is displayed'
 
-        first_video_centred = scroll_until_pattern_found(north_text_mark_pattern, 100, 20)
+        first_video_centred = scroll_until_pattern_found(north_text_mark_pattern, mouse_wheel_steps, 20)
         assert first_video_centred is True, 'First video is centred among the page'
 
         click(north_text_mark_pattern.target_offset(0, -100))
@@ -59,7 +66,7 @@ class Test(FirefoxTest):
         except FindError:
             raise FindError('Video is not stopped')
 
-        another_video_exists = scroll_until_pattern_found(related_video_pattern, 500, 20)
+        another_video_exists = scroll_until_pattern_found(related_video_pattern, mouse_wheel_steps, 20)
         assert another_video_exists is True, 'Another video is displayed'
 
         click(related_video_pattern)
