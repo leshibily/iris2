@@ -29,7 +29,7 @@ class Test(FirefoxTest):
         if OSHelper.is_windows():
             mouse_wheel_steps = 500
         elif OSHelper.is_linux():
-            mouse_wheel_steps = 100
+            mouse_wheel_steps = 5
         else:
             mouse_wheel_steps = 100
 
